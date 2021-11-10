@@ -15,6 +15,8 @@ import java.io.IOException;
  */
 public class InternalWindow extends javax.swing.JInternalFrame {
 
+    private String summy;
+    
     InternalWindow(File fileSelected) throws IOException {
         initComponents();
         this.imagePanel1.setPicture(fileSelected);
