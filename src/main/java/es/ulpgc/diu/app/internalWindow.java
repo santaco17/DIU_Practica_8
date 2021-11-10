@@ -6,23 +6,30 @@
 package es.ulpgc.diu.app;
 
 import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
  * @author santa
  */
-public class internalWindow extends javax.swing.JInternalFrame {
+public class InternalWindow extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form internalWindow
-     */
-    public internalWindow() {
+    InternalWindow(File fileSelected) throws IOException {
         initComponents();
-        this.setPreferredSize(new Dimension (950,650));
+        this.imagePanel1.setPicture(fileSelected);
+        initProperties();
+    }
+
+    private void initProperties() {
+        this.setPreferredSize(new Dimension(this.imagePanel1.getCurrentPicture().getWidth(),
+                                            this.imagePanel1.getCurrentPicture().getHeight()));
         this.setMaximizable(true);
         this.setClosable(true);
         this.setIconifiable(true);
         this.setResizable(true);
+        this.pack();
+        this.setVisible(true);
     }
 
     /**
@@ -34,15 +41,28 @@ public class internalWindow extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        imagePanel1 = new es.ulpgc.diu.app.ImagePanel();
+
+        javax.swing.GroupLayout imagePanel1Layout = new javax.swing.GroupLayout(imagePanel1);
+        imagePanel1.setLayout(imagePanel1Layout);
+        imagePanel1Layout.setHorizontalGroup(
+            imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        imagePanel1Layout.setVerticalGroup(
+            imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 278, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(imagePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addComponent(imagePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -50,5 +70,6 @@ public class internalWindow extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private es.ulpgc.diu.app.ImagePanel imagePanel1;
     // End of variables declaration//GEN-END:variables
 }

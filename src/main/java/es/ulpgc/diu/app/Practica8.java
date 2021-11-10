@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -25,7 +24,7 @@ public class Practica8 extends javax.swing.JFrame {
     /**
      * Creates new form Practica8
      */
-    private JFileChooser fileChooser;
+    private final JFileChooser fileChooser;
     private FileNameExtensionFilter fileNameExtensionFilter;
     
     public Practica8() {
@@ -46,7 +45,6 @@ public class Practica8 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        imagePanel1 = new es.ulpgc.diu.app.ImagePanel();
         desktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         optionsMenu = new javax.swing.JMenu();
@@ -70,16 +68,8 @@ public class Practica8 extends javax.swing.JFrame {
         jLabel1.setText("Aarón Hernández Álvarez y Santiago Abraham Izquierdo Cubas");
         jLabel1.setMaximumSize(new java.awt.Dimension(9359, 14));
 
-        javax.swing.GroupLayout imagePanel1Layout = new javax.swing.GroupLayout(imagePanel1);
-        imagePanel1.setLayout(imagePanel1Layout);
-        imagePanel1Layout.setHorizontalGroup(
-            imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 902, Short.MAX_VALUE)
-        );
-        imagePanel1Layout.setVerticalGroup(
-            imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        desktop.setMaximumSize(null);
+        desktop.setName(""); // NOI18N
 
         javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
         desktop.setLayout(desktopLayout);
@@ -89,7 +79,7 @@ public class Practica8 extends javax.swing.JFrame {
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+            .addGap(0, 532, Short.MAX_VALUE)
         );
 
         optionsMenu.setText("Archivo");
@@ -170,22 +160,15 @@ public class Practica8 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addComponent(imagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(desktop)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
+            .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(desktop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(imagePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -197,8 +180,9 @@ public class Practica8 extends javax.swing.JFrame {
             File fileSelected = this.fileChooser.getSelectedFile();
             if(this.fileNameExtensionFilter.accept(fileSelected)){
                 try {
-                    this.imagePanel1.reloadCanvas(fileSelected);
-                    enableSaveEditOptions();
+                    InternalWindow internalWindow = new InternalWindow(fileSelected);
+                    internalWindow.setTitle(fileSelected.getName());
+                    this.desktop.add(internalWindow);
                 } catch (IOException ex) {
                     Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -223,25 +207,25 @@ public class Practica8 extends javax.swing.JFrame {
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
+        /*File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
         this.fileChooser.setSelectedFile(outputFile);
         int jFileChooserOptionSelected = this.fileChooser.showSaveDialog(this);
         try {
             saveCurrentImage(jFileChooserOptionSelected, outputFile);
         } catch (IOException ex) {
             Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void saveCurrentImage(int jFileChooserOptionSelected, File outputFile) throws IOException {
-        if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
+        /*if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
             String fileToSave = this.fileChooser.getCurrentDirectory() + "\\" + outputFile.getName();
             ImageIO.write(this.imagePanel1.getCurrentPicture(), "jpg", new File(fileToSave));
-        }
+        }*/
     }
 
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
-        String input = JOptionPane.showInputDialog("Inserte el factor de realce");
+        /*String input = JOptionPane.showInputDialog("Inserte el factor de realce");
         if(inputIsValid(input)){
             try {
                 this.imagePanel1.thresholdPicture(Integer.parseInt(input));
@@ -250,7 +234,7 @@ public class Practica8 extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "ERROR: Debe ser un número entero", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        }*/
     }//GEN-LAST:event_editMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -259,9 +243,6 @@ public class Practica8 extends javax.swing.JFrame {
 
     private void openInternalWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openInternalWindowActionPerformed
         // TODO add your handling code here:
-        internalWindow window = new internalWindow();
-        desktop.add(window); 
-        window.setVisible(true); 
     }//GEN-LAST:event_openInternalWindowActionPerformed
 
     private void closeAllWindowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAllWindowsActionPerformed
@@ -311,6 +292,7 @@ public class Practica8 extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Practica8().setVisible(true);
             }
@@ -324,7 +306,6 @@ public class Practica8 extends javax.swing.JFrame {
     private javax.swing.JMenuItem editMenuItem;
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu helpMenu;
-    private es.ulpgc.diu.app.ImagePanel imagePanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;

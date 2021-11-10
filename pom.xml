@@ -26,7 +26,7 @@
               <configuration>
                   <archive>
                       <manifest>
-                          <mainClass>es.ulpgc.diu.app.Practica6</mainClass>
+                          <mainClass>es.ulpgc.diu.app.Practica8</mainClass>
                       </manifest>
                   </archive>
               </configuration>
@@ -48,7 +48,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>es.ulpgc.diu.app.Practica6</mainClass>
+                                    <mainClass>es.ulpgc.diu.app.Practica8</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

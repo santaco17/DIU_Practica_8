@@ -5,6 +5,7 @@
  */
 package es.ulpgc.diu.app;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -40,7 +41,6 @@ public class ImagePanel extends JPanel {
     }
 
     void reloadCanvas(File fileSelected) throws MalformedURLException, IOException {
-        setPicture(fileSelected);
         Graphics g = this.getGraphics();  
         this.paintComponent(g);
     }
@@ -50,10 +50,11 @@ public class ImagePanel extends JPanel {
         this.paintComponent(g);
     }
 
-    private void setPicture(File fileSelected) throws IOException {
+    public void setPicture(File fileSelected) throws IOException {
         picture = ImageIO.read(fileSelected);
         currentPicture = picture;
         this.currentPictureName = fileSelected.getName();
+        this.repaint();
     }
     
     public BufferedImage getCurrentPicture(){
