@@ -180,7 +180,7 @@ public class Practica8 extends javax.swing.JFrame {
             File fileSelected = this.fileChooser.getSelectedFile();
             if(this.fileNameExtensionFilter.accept(fileSelected)){
                 try {
-                    InternalWindow internalWindow = new InternalWindow(fileSelected);
+                    internalWindow internalWindow = new internalWindow(fileSelected);
                     internalWindow.setTitle(fileSelected.getName());
                     this.desktop.add(internalWindow);
                 } catch (IOException ex) {

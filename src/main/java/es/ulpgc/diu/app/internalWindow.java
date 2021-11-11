@@ -13,11 +13,11 @@ import java.io.IOException;
  *
  * @author santa
  */
-public class InternalWindow extends javax.swing.JInternalFrame {
+public class internalWindow extends javax.swing.JInternalFrame {
 
     private String summy;
     
-    InternalWindow(File fileSelected) throws IOException {
+    internalWindow(File fileSelected) throws IOException {
         initComponents();
         this.imagePanel1.setPicture(fileSelected);
         initProperties();
@@ -49,11 +49,11 @@ public class InternalWindow extends javax.swing.JInternalFrame {
         imagePanel1.setLayout(imagePanel1Layout);
         imagePanel1Layout.setHorizontalGroup(
             imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
         imagePanel1Layout.setVerticalGroup(
             imagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGap(0, 284, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
