@@ -29,7 +29,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="es.ulpgc.diu.app.ImagePanel" name="imagePanel1">
+    <Container class="es.ulpgc.diu.app.model.ImagePanel" name="imagePanel1">
 
       <Layout>
         <DimensionLayout dim="0">

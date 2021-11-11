@@ -5,6 +5,10 @@
  */
 package es.ulpgc.diu.app;
 
+import es.ulpgc.diu.app.model.InternalWindow;
+import es.ulpgc.diu.app.helpers.Helper;
+import es.ulpgc.diu.app.helpers.ImageHelper;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,6 +30,7 @@ public class Practica8 extends javax.swing.JFrame {
      */
     private final JFileChooser fileChooser;
     private FileNameExtensionFilter fileNameExtensionFilter;
+    private BufferedImage CurrentPicture;
     
     public Practica8() {
         nu.pattern.OpenCV.loadShared();
@@ -34,7 +39,12 @@ public class Practica8 extends javax.swing.JFrame {
         this.fileChooser = new JFileChooser();
         setImageExtensionsFilter();
     }
-
+    
+    private void setImageExtensionsFilter() {
+        this.fileNameExtensionFilter = new FileNameExtensionFilter("Image extensions","png","jpg","bmp","jpeg");
+        this.fileChooser.addChoosableFileFilter(fileNameExtensionFilter);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,8 +63,6 @@ public class Practica8 extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitItem = new javax.swing.JMenuItem();
-        openInternalWindow = new javax.swing.JMenuItem();
-        closeAllWindows = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -123,22 +131,6 @@ public class Practica8 extends javax.swing.JFrame {
         });
         optionsMenu.add(exitItem);
 
-        openInternalWindow.setText("Abrir ventana interna");
-        openInternalWindow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openInternalWindowActionPerformed(evt);
-            }
-        });
-        optionsMenu.add(openInternalWindow);
-
-        closeAllWindows.setText("Cerrar todas las ventanas");
-        closeAllWindows.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeAllWindowsActionPerformed(evt);
-            }
-        });
-        optionsMenu.add(closeAllWindows);
-
         jMenuBar1.add(optionsMenu);
 
         helpMenu.setText("Ayuda");
@@ -175,14 +167,16 @@ public class Practica8 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        this.removeAllFrames();
         int jFileChooserOptionSelected = this.fileChooser.showOpenDialog(this);
         if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
             File fileSelected = this.fileChooser.getSelectedFile();
             if(this.fileNameExtensionFilter.accept(fileSelected)){
                 try {
-                    internalWindow internalWindow = new internalWindow(fileSelected);
-                    internalWindow.setTitle(fileSelected.getName());
+                    InternalWindow internalWindow = new InternalWindow(fileSelected);
+                    this.CurrentPicture = internalWindow.getCurrentImage();
                     this.desktop.add(internalWindow);
+                    enableSaveEditOptions();
                 } catch (IOException ex) {
                     Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -192,9 +186,11 @@ public class Practica8 extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void setImageExtensionsFilter() {
-        this.fileNameExtensionFilter = new FileNameExtensionFilter("Image extensions","png","jpg","bmp","jpeg");
-        this.fileChooser.addChoosableFileFilter(fileNameExtensionFilter);
+    private void removeAllFrames() {
+        JInternalFrame[] windowsVector = desktop.getAllFrames();
+        for(JInternalFrame window : windowsVector){
+            window.dispose();
+        }
     }
     
     public void enableSaveEditOptions() {
@@ -225,35 +221,29 @@ public class Practica8 extends javax.swing.JFrame {
     }
 
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
-        /*String input = JOptionPane.showInputDialog("Inserte el factor de realce");
+        String input = JOptionPane.showInputDialog("Inserte el factor de realce");
         if(inputIsValid(input)){
             try {
-                this.imagePanel1.thresholdPicture(Integer.parseInt(input));
+                var inputAsInt = Integer.parseInt(input);
+                var thresholdedImage = ImageHelper.thresholdImage(this.CurrentPicture, inputAsInt);
+                var internalWindow = new InternalWindow(thresholdedImage, getThresholdedPictureTitle(inputAsInt));
+                this.desktop.add(internalWindow);
             } catch (IOException ex) {
                 Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "ERROR: Debe ser un número entero", "Error", JOptionPane.ERROR_MESSAGE);
-        }*/
+        }
     }//GEN-LAST:event_editMenuItemActionPerformed
 
+    private String getThresholdedPictureTitle(int thresholdFactor) {
+        return this.desktop.getAllFrames()[0].getTitle() + " - Factor: " + thresholdFactor;
+    }
+    
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         JOptionPane.showMessageDialog(rootPane, Helper.getHelpInfo(), "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
-    private void openInternalWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openInternalWindowActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openInternalWindowActionPerformed
-
-    private void closeAllWindowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAllWindowsActionPerformed
-        // TODO add your handling code here:
-        JInternalFrame[] windowsVector = desktop.getAllFrames();
-        for(JInternalFrame window : windowsVector){
-            window.dispose();
-        }
-    }//GEN-LAST:event_closeAllWindowsActionPerformed
-
-    
     private boolean inputIsValid(String input) {
         try {
             int parseInt = Integer.parseInt(input);
@@ -301,7 +291,6 @@ public class Practica8 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem closeAllWindows;
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuItem editMenuItem;
     private javax.swing.JMenuItem exitItem;
@@ -309,7 +298,6 @@ public class Practica8 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenuItem openInternalWindow;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenu optionsMenu;
     private javax.swing.JMenuItem saveMenuItem;

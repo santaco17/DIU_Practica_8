@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.ulpgc.diu.app;
+package es.ulpgc.diu.app.model;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,13 +14,21 @@ import java.io.IOException;
  *
  * @author santa
  */
-public class internalWindow extends javax.swing.JInternalFrame {
+public class InternalWindow extends javax.swing.JInternalFrame {
 
     private String summy;
     
-    internalWindow(File fileSelected) throws IOException {
+    public InternalWindow(File fileSelected) throws IOException {
         initComponents();
         this.imagePanel1.setPicture(fileSelected);
+        this.setTitle(this.imagePanel1.getCurrentPictureName());
+        initProperties();
+    }
+    
+    public InternalWindow(BufferedImage thresholdedPicture, String name) throws IOException {
+        initComponents();
+        this.imagePanel1.setPicture(thresholdedPicture, name);
+        this.setTitle(name);
         initProperties();
     }
 
@@ -43,7 +52,7 @@ public class internalWindow extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        imagePanel1 = new es.ulpgc.diu.app.ImagePanel();
+        imagePanel1 = new es.ulpgc.diu.app.model.ImagePanel();
 
         javax.swing.GroupLayout imagePanel1Layout = new javax.swing.GroupLayout(imagePanel1);
         imagePanel1.setLayout(imagePanel1Layout);
@@ -72,6 +81,10 @@ public class internalWindow extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private es.ulpgc.diu.app.ImagePanel imagePanel1;
+    private es.ulpgc.diu.app.model.ImagePanel imagePanel1;
     // End of variables declaration//GEN-END:variables
+
+    public BufferedImage getCurrentImage() {
+        return this.imagePanel1.getCurrentPicture();
+    }
 }
