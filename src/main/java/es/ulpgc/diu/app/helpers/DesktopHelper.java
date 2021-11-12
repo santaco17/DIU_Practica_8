@@ -23,8 +23,10 @@ public class DesktopHelper {
     
     public static ArrayList<JInternalFrame> getOpenedThresholdFrames(JInternalFrame[] arrayOfFrames){
         ArrayList<JInternalFrame> openedThresholdFrames = new ArrayList();
-        for (int i = 0; i < arrayOfFrames.length-1; i++) {
-            openedThresholdFrames.add(arrayOfFrames[i]);
+        for (int i = 0; i <= arrayOfFrames.length-1; i++) {
+            if(arrayOfFrames[i].getTitle().contains("Factor-de-umbral")){
+                openedThresholdFrames.add(arrayOfFrames[i]);
+            }
         }
         return openedThresholdFrames;
     }

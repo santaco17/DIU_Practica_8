@@ -83,8 +83,8 @@ public class InternalWindow extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private es.ulpgc.diu.app.model.ImagePanel imagePanel1;
     // End of variables declaration//GEN-END:variables
-
-    public BufferedImage getCurrentImage() {
-        return this.imagePanel1.getCurrentPicture();
+    
+    public ImagePanel getImagePanel(){
+        return this.imagePanel1;
     }
 }

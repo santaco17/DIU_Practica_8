@@ -32,7 +32,6 @@ public class Practica8 extends javax.swing.JFrame {
     private final JFileChooser fileChooser;
     private FileNameExtensionFilter fileNameExtensionFilter;
     private BufferedImage CurrentPicture;
-    private DesktopHelper desktopHelper;
     
     public Practica8() {
         nu.pattern.OpenCV.loadShared();
@@ -242,7 +241,7 @@ public class Practica8 extends javax.swing.JFrame {
             if(this.fileNameExtensionFilter.accept(fileSelected)){
                 try {
                     InternalWindow internalWindow = new InternalWindow(fileSelected);
-                    this.CurrentPicture = internalWindow.getCurrentImage();
+                    this.CurrentPicture = internalWindow.getImagePanel().getCurrentPicture();
                     this.desktop.add(internalWindow);
                     this.editMenuItem.setEnabled(true);
                 } catch (IOException ex) {
@@ -267,10 +266,10 @@ public class Practica8 extends javax.swing.JFrame {
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         DesktopHelper.saveImage(this.desktop.getAllFrames());
-        updateEditStatus();
+        updateSaveStatus();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
-    private void updateEditStatus() {
+    private void updateSaveStatus() {
         var frames = this.desktop.getAllFrames();
         var thresholdFrames = DesktopHelper.getOpenedThresholdFrames(frames);
         this.saveMenuItem.setEnabled(!(thresholdFrames.size() == 1));
@@ -294,7 +293,7 @@ public class Practica8 extends javax.swing.JFrame {
     }//GEN-LAST:event_editMenuItemActionPerformed
 
     private String getThresholdedPictureTitle(int thresholdFactor) {
-        return this.desktop.getAllFrames()[0].getTitle() + " - Factor: " + thresholdFactor;
+        return this.desktop.getAllFrames()[0].getTitle() + " - Factor-de-umbral " + thresholdFactor;
     }
     
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed

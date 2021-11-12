@@ -1,10 +1,17 @@
 package es.ulpgc.diu.fx;
 
+import es.ulpgc.diu.app.model.InternalWindow;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SaveDialog extends JDialog {
 
@@ -15,6 +22,9 @@ public class SaveDialog extends JDialog {
     private javax.swing.JButton saveButton;
     private javax.swing.JButton cancelButton;
     private static ArrayList<JInternalFrame> openedFrames;
+    private int jFileChooserOptionSelected;
+    private JFileChooser fileChooser;
+    private FileNameExtensionFilter fileNameExtensionFilter;
     
     public SaveDialog(ArrayList<JInternalFrame> allFrames){
         openedFrames = allFrames;
@@ -29,6 +39,9 @@ public class SaveDialog extends JDialog {
         jPanel2 = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        this.fileNameExtensionFilter = new FileNameExtensionFilter("Image extensions","png","jpg","bmp","jpeg");
+        this.fileChooser = new JFileChooser();
+        this.fileChooser.addChoosableFileFilter(fileNameExtensionFilter);
 
         setAvailableFrames(this.openedFrames);
         this.jLabel2.setText("Seleccione la ventana que desea guardar");
@@ -87,8 +100,13 @@ public class SaveDialog extends JDialog {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 var selectedFrame = jComboBox1.getSelectedItem().toString();
-                //Guardar si no es null
-                getInstance(selectedFrame).dispose();
+                if(selectedFrame != null){
+                    try {
+                        saveNewImage(selectedFrame);
+                    } catch (IOException ex) {
+                        Logger.getLogger(SaveDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 dispose();
             }
         });
@@ -99,7 +117,31 @@ public class SaveDialog extends JDialog {
             }
         });
     }
-
+    
+    private void saveNewImage(String selectedFrame) throws IOException {
+        InternalWindow windowToBeSaved = (InternalWindow) getInstance(selectedFrame);
+        var imageToSave = windowToBeSaved.getImagePanel().getCurrentPicture();
+        var fileToSaveName = windowToBeSaved.getTitle() + "_modified.png";
+        File outputFile = new File(fileToSaveName);
+        
+        this.fileChooser.setSelectedFile(outputFile);
+        int jFileChooserOptionSelected = this.fileChooser.showSaveDialog(this);
+        if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
+            String fileToSave = this.fileChooser.getCurrentDirectory() + "\\" + outputFile.getName();
+            ImageIO.write(imageToSave, "jpg", new File(fileToSave));
+        }
+        getInstance(selectedFrame).dispose();
+    }
+    
+    private static JInternalFrame getInstance(String title){
+        for (JInternalFrame openedFrame : openedFrames) {
+            if(openedFrame.getTitle().equals(title)){
+                return openedFrame;
+            }
+        }
+        return null;
+    }
+    
     private void setAvailableFrames(ArrayList<JInternalFrame> allFrames) {
         var model = new javax.swing.DefaultComboBoxModel<>(getCurrentFramesTitles(allFrames));
         this.jComboBox1.setModel(model);
@@ -113,15 +155,6 @@ public class SaveDialog extends JDialog {
         return titles;
     }
     
-    private static JInternalFrame getInstance(String title){
-        for (JInternalFrame openedFrame : openedFrames) {
-            if(openedFrame.getTitle().equals(title)){
-                return openedFrame;
-            }
-        }
-        return null;
-    }
-    
     private static void saveCurrentImage(int jFileChooserOptionSelected, File outputFile) throws IOException {
         /*if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
             String fileToSave = this.fileChooser.getCurrentDirectory() + "\\" + outputFile.getName();
@@ -130,7 +163,7 @@ public class SaveDialog extends JDialog {
     }
     // this.desktop.getAllFrames()[0].getTitle() + " - Factor: " + thresholdFactor;
     
-            /*File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
+        /*File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
         this.fileChooser.setSelectedFile(outputFile);
         int jFileChooserOptionSelected = this.fileChooser.showSaveDialog(this);
         try {
