@@ -203,6 +203,7 @@ public class Practica8 extends javax.swing.JFrame {
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        this.desktop.getAllFrames();
         /*File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
         this.fileChooser.setSelectedFile(outputFile);
         int jFileChooserOptionSelected = this.fileChooser.showSaveDialog(this);
