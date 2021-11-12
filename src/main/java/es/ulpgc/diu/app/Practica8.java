@@ -5,6 +5,7 @@
  */
 package es.ulpgc.diu.app;
 
+import es.ulpgc.diu.app.helpers.DesktopHelper;
 import es.ulpgc.diu.app.model.InternalWindow;
 import es.ulpgc.diu.app.helpers.Helper;
 import es.ulpgc.diu.app.helpers.ImageHelper;
@@ -31,6 +32,7 @@ public class Practica8 extends javax.swing.JFrame {
     private final JFileChooser fileChooser;
     private FileNameExtensionFilter fileNameExtensionFilter;
     private BufferedImage CurrentPicture;
+    private DesktopHelper desktopHelper;
     
     public Practica8() {
         nu.pattern.OpenCV.loadShared();
@@ -54,6 +56,13 @@ public class Practica8 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        saveDialog = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        saveButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         desktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -65,6 +74,65 @@ public class Practica8 extends javax.swing.JFrame {
         exitItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setText("Seleccione la ventana que desea guardar");
+
+        jPanel2.setLayout(new java.awt.GridLayout(1, 2, 100, 50));
+
+        saveButton.setLabel("Guardar");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(saveButton);
+
+        cancelButton.setLabel("Cancelar");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cancelButton);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+
+        javax.swing.GroupLayout saveDialogLayout = new javax.swing.GroupLayout(saveDialog.getContentPane());
+        saveDialog.getContentPane().setLayout(saveDialogLayout);
+        saveDialogLayout.setHorizontalGroup(
+            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        saveDialogLayout.setVerticalGroup(
+            saveDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saveDialogLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(9999, 9999));
@@ -87,7 +155,7 @@ public class Practica8 extends javax.swing.JFrame {
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 532, Short.MAX_VALUE)
+            .addGap(0, 599, Short.MAX_VALUE)
         );
 
         optionsMenu.setText("Archivo");
@@ -152,7 +220,7 @@ public class Practica8 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
             .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -176,7 +244,7 @@ public class Practica8 extends javax.swing.JFrame {
                     InternalWindow internalWindow = new InternalWindow(fileSelected);
                     this.CurrentPicture = internalWindow.getCurrentImage();
                     this.desktop.add(internalWindow);
-                    enableSaveEditOptions();
+                    this.editMenuItem.setEnabled(true);
                 } catch (IOException ex) {
                     Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -192,35 +260,22 @@ public class Practica8 extends javax.swing.JFrame {
             window.dispose();
         }
     }
-    
-    public void enableSaveEditOptions() {
-        this.saveMenuItem.setEnabled(true);
-        this.editMenuItem.setEnabled(true);
-    }
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
         this.dispose();
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        this.desktop.getAllFrames();
-        /*File outputFile = new File(this.imagePanel1.getCurrentPictureName() + "_modified" + this.imagePanel1.getCurrentPictureFormat());
-        this.fileChooser.setSelectedFile(outputFile);
-        int jFileChooserOptionSelected = this.fileChooser.showSaveDialog(this);
-        try {
-            saveCurrentImage(jFileChooserOptionSelected, outputFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        DesktopHelper.saveImage(this.desktop.getAllFrames());
+        updateEditStatus();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
-    private void saveCurrentImage(int jFileChooserOptionSelected, File outputFile) throws IOException {
-        /*if(jFileChooserOptionSelected == JFileChooser.APPROVE_OPTION){
-            String fileToSave = this.fileChooser.getCurrentDirectory() + "\\" + outputFile.getName();
-            ImageIO.write(this.imagePanel1.getCurrentPicture(), "jpg", new File(fileToSave));
-        }*/
+    private void updateEditStatus() {
+        var frames = this.desktop.getAllFrames();
+        var thresholdFrames = DesktopHelper.getOpenedThresholdFrames(frames);
+        this.saveMenuItem.setEnabled(!(thresholdFrames.size() == 1));
     }
-
+    
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
         String input = JOptionPane.showInputDialog("Inserte el factor de realce");
         if(inputIsValid(input)){
@@ -229,6 +284,7 @@ public class Practica8 extends javax.swing.JFrame {
                 var thresholdedImage = ImageHelper.thresholdImage(this.CurrentPicture, inputAsInt);
                 var internalWindow = new InternalWindow(thresholdedImage, getThresholdedPictureTitle(inputAsInt));
                 this.desktop.add(internalWindow);
+                this.saveMenuItem.setEnabled(true);
             } catch (IOException ex) {
                 Logger.getLogger(Practica8.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -244,6 +300,14 @@ public class Practica8 extends javax.swing.JFrame {
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         JOptionPane.showMessageDialog(rootPane, Helper.getHelpInfo(), "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.saveDialog.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private boolean inputIsValid(String input) {
         try {
@@ -292,16 +356,24 @@ public class Practica8 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuItem editMenuItem;
     private javax.swing.JMenuItem exitItem;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenu optionsMenu;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JDialog saveDialog;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
+
 
 }
